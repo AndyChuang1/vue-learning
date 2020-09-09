@@ -8,8 +8,8 @@
       Roman Number:{{ romanToInt }}
     </h2>
     <div class="btn-group">
-      <button v-on:click="increase()">+</button>
-      <button @click="decrease()">-</button>
+      <button v-if="count < 10" v-on:click="increase()">+</button>
+      <button v-show="count > 0" @click="decrease()">-</button>
     </div>
   </div>
 </template>
