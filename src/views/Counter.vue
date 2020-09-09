@@ -20,6 +20,13 @@ export default {
       count: 0,
     };
   },
+  watch: {
+    count(newNumber) {
+      if (newNumber === 10 || newNumber === 0) {
+        alert(`Number achieve ${newNumber}`);
+      }
+    },
+  },
   methods: {
     increase() {
       this.count += 1;
