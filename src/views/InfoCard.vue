@@ -7,7 +7,7 @@
         :userId="data.userId"
         :id="data.id"
         :title="data.title"
-        :completed="data.complete"
+        :completed="data.completed"
         :key="idx"
       ></Card>
     </div>
@@ -16,11 +16,15 @@
 <script>
 import Header from '@/components/Header.vue';
 import Card from '@/components/Card.vue';
+import axios from 'axios';
 
 export default {
   components: {
     Header,
     Card,
+  },
+  created() {
+    this.getTodoInfo();
   },
   data() {
     return {
@@ -46,10 +50,24 @@ export default {
       ],
     };
   },
+  methods: {
+    getTodoInfo() {
+      axios
+        .get('https://jsonplaceholder.typicode.com/users/1/todos/')
+        .then((data) => {
+          this.cardInfo = data.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
 .cardGroup {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 </style>

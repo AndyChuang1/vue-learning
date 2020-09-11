@@ -24,8 +24,8 @@ export default {
       default: 'Default',
     },
     completed: {
-      type: Number,
-      default: 0,
+      type: Boolean,
+      default: false,
     },
   },
 };
