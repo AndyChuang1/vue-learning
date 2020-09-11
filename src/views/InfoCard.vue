@@ -1,6 +1,11 @@
 <template>
   <div class="infoCard">
     <Header msg="I'm infoCard Page"></Header>
+    <button @click="getTodoInfo()">All</button>
+    <input v-model="userId" />
+    <button @click="getTodoInfo(userId)">Search</button>
+    <h3 class="infoLength">資料數量: {{ infoLength }}</h3>
+    <h3 class="completeLength">完成數量: {{ completeLength }}</h3>
     <div class="cardGroup">
       <Card
         v-for="(data, idx) in cardInfo"
@@ -28,6 +33,7 @@ export default {
   },
   data() {
     return {
+      userId: '',
       cardInfo: [
         {
           userId: 1,
@@ -51,15 +57,28 @@ export default {
     };
   },
   methods: {
-    getTodoInfo() {
+    getTodoInfo(id) {
+      let url = `https://jsonplaceholder.typicode.com/users/${id}/todos/`;
+      if (!id) {
+        url = 'https://jsonplaceholder.typicode.com/todos/';
+        this.userId = '';
+      }
       axios
-        .get('https://jsonplaceholder.typicode.com/users/1/todos/')
+        .get(url)
         .then((data) => {
           this.cardInfo = data.data;
         })
         .catch((err) => {
           console.log(err);
         });
+    },
+  },
+  computed: {
+    infoLength() {
+      return this.cardInfo.length;
+    },
+    completeLength() {
+      return this.cardInfo.filter((item) => item.completed).length;
     },
   },
 };
